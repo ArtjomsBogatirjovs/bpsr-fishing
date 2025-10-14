@@ -5,11 +5,27 @@ from ok import ConfigOption
 
 version = "dev"
 
+
+key_config_option = ConfigOption(
+    "游戏设置",
+    {
+        "游戏语言": "国服",
+    },
+    description="游戏设置",
+    config_type={
+        "游戏语言": {
+            "type": "drop_down",
+            "options": ["中文", "English"],
+        }
+    },
+)
+
+
 config = {
     'debug': False,  # Optional, default: False
     'use_gui': True,
     'config_folder': 'configs',
-    'global_configs': [],
+    'global_configs': [key_config_option],
     'gui_icon': 'icons/icon.png',
     'wait_until_before_delay': 0,
     'wait_until_check_delay': 0,
