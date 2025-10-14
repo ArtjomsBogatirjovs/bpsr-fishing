@@ -1,0 +1,27 @@
+name: Sync to cnb.cool
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    name: Push to cnb.cool
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push to cnb.cool
+        env:
+          CNB_USERNAME: ${{ secrets.CNB_USERNAME }}
+          CNB_TOKEN: ${{ secrets.CNB_ACCESS_TOKEN }}
+          TARGET_URL: "https://cnb.cool/sanheiii/ok-star-resonance.git"
+        run: |
+          echo "Pushing to target repository..."
+          git push "https://{$CNB_USERNAME}:${CNB_TOKEN}@${TARGET_URL#https://}" --all --force
+          git push "https://{$CNB_USERNAME}:${CNB_TOKEN}@${TARGET_URL#https://}" --tags --force
+          echo "Push completed."
