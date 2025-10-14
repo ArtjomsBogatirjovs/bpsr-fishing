@@ -113,7 +113,7 @@ class FishingTask(SRTriggerTask):
         now = time.time()
         if self.last_continue_time is not None and now - self.last_continue_time <= 1:
             return False
-        if self.ocr(0.79, 0.88, 0.87, 0.93, match=re.compile('Continue fishing')):
+        if self.ocr(0.75, 0.88, 0.9, 0.94, match=re.compile('Continue fishing')):
             self.log_info('Нажмите, чтобы продолжить рыбалку', notify=False)
             self.sleep(1.5)
             self.click(0.82, 0.90)
