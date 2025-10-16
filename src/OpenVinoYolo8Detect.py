@@ -79,7 +79,6 @@ class OpenVinoYolo8Detect:  # Renamed class
         return img, (top, left)
 
     def _preprocess(self, img):
-        """图像预处理（保持宽高比的缩放填充） - unchanged"""
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
         img, pad = self.letterbox(img, (self.input_width, self.input_height))

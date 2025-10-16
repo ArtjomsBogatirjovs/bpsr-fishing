@@ -107,7 +107,6 @@ class OnnxYolo8Detect:  # Renamed class
         return img, (top, left)
 
     def _preprocess(self, img):
-        """图像预处理（保持宽高比的缩放填充）"""
         img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         # Use preprocess_target_h and preprocess_target_w for letterboxing
         img_letterboxed, pad = self.letterbox(img_rgb, (self.preprocess_target_h, self.preprocess_target_w))
