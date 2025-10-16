@@ -1,29 +1,29 @@
-import time
-import datetime
 import re
 import threading
+import time
 
 from ok import og
 
 from src.tasks.SRTriggerTask import SRTriggerTask
 
+
 class FishingTask(SRTriggerTask):
-    
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.name = "Auto-Fishing"
         self.description = "Automatic fishing after interacting with fishing spots."
-        
+
         self.settings = [
             {'key': 'switch_rod_key', 'label': 'Fishing rod switch button', 'default': "m"}
         ]
-        
+
         self.default_config.update({
             setting['label']: setting['default'] for setting in self.settings
         })
-        
+
         self._settings_map = {s['key']: s for s in self.settings}
-        
+
         self.trigger_count = 0
 
         self.pos = 0
@@ -39,14 +39,6 @@ class FishingTask(SRTriggerTask):
 
         self._splash_finder_thread = None
         self._fish_pos_lock = threading.Lock()
-
-        self.regex_map = {
-            'english': {
-                'add_rod': re.compile('pole'),
-                'continue_fishing': re.compile('Continue fishing'),
-                'use': re.compile('Use'),
-            }
-        }
 
     def _splash_finder_worker(self):
         splash_box = self.find_splash()
@@ -73,7 +65,7 @@ class FishingTask(SRTriggerTask):
             if self.ocr(0.90, 0.92, 0.96, 0.96, match=re.compile('pole')):
                 self.log_info('Replace fishing rod', notify=False)
                 self.send_key(self.get_config_value('switch_rod_key'))
-                use_boxes = self.wait_ocr(box=None, match=self.get_regex('use'), log=False, threshold=0.8, time_out=15)
+                use_boxes = self.wait_ocr(box=None, match=re.compile('Use'), log=False, threshold=0.8, time_out=15)
                 if use_boxes:
                     self.log_info('Click to use fishing rod', notify=False)
                     center = use_boxes[0].center()
@@ -168,10 +160,10 @@ class FishingTask(SRTriggerTask):
 
     def _update_rod_position(self, delta_time: float):
         if not self.key_a_pressed and not self.key_d_pressed:
-            if self.pos > 0: 
+            if self.pos > 0:
                 self.pos -= 1.0 * delta_time
                 if self.pos < 0: self.pos = 0
-            else : 
+            else:
                 self.pos += 1.0 * delta_time
                 if self.pos > 0: self.pos = 0
 
@@ -182,7 +174,7 @@ class FishingTask(SRTriggerTask):
             self.pos += 0.5 * delta_time
 
         self.pos = min(max(self.pos, -1.0), 1.0)
-    
+
     def _reset_minigame_state(self):
         self.log_info('Reset Fishing', notify=False)
         self.my_mouse_up()

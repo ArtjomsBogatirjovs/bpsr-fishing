@@ -1,10 +1,7 @@
 import os.path
-from os import path
 
-import cv2
-from PySide6.QtCore import Signal, QObject
-
-from ok import Config, Logger, get_path_relative_to_exe, og
+from PySide6.QtCore import QObject
+from ok import Logger, get_path_relative_to_exe, og
 
 logger = Logger.get_logger(__name__)
 
@@ -33,6 +30,7 @@ class Globals(QObject):
 
     def yolo_detect(self, image, threshold=0.6, label=-1):
         return self.yolo_model.detect(image, threshold=threshold, label=label)
+
 
 if __name__ == "__main__":
     glbs = Globals(exit_event=None)

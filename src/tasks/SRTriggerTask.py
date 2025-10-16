@@ -32,9 +32,3 @@ class SRTriggerTask(TriggerTask):
         if setting:
             return self.config.get(setting['label'], setting['default'])
         return None
-
-    def get_game_language(self):
-         return 'english'
-    
-    def get_regex(self, key: str):
-        return self.regex_map.get(self.get_game_language(), {}).get(key, None)

@@ -1,14 +1,10 @@
-import os
-import random
-import time
 from typing import Tuple
 
-# import onnxruntime as ort # Removed onnxruntime
-from openvino import Core  # Added OpenVINO Core
 import cv2
 import numpy as np
-
 from ok import Logger, Box, sort_boxes
+# import onnxruntime as ort # Removed onnxruntime
+from openvino import Core  # Added OpenVINO Core
 
 logger = Logger.get_logger(__name__)
 
