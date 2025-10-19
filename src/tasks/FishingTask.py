@@ -71,7 +71,7 @@ class FishingTask(SRTriggerTask):
                     center = use_boxes[0].center()
                     self.click(center[0] / self.width, center[1] / self.height)
                 else:
-                    self.log_info('没有鱼竿了', notify=True)
+                    self.log_info('No fishing rod', notify=True)
                     self.screenshot()
                     raise Exception("I don't have a fishing rod anymore, I need to buy one.")
             else:
